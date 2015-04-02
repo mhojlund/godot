@@ -1059,14 +1059,15 @@ void SceneTreeDock::_create() {
 
 
 		if (edited_scene) {
-
+			// If root exists in edited scene
 			parent = scene_tree->get_selected();
-			ERR_FAIL_COND(!parent);
-		} else {
+			if( !parent )
+				parent = edited_scene;
 
+		} else {
+			// If no root exist in edited scene
 			parent = scene_root;
 			ERR_FAIL_COND(!parent);
-
 		}
 
 		Object *c = create_dialog->instance_selected();
@@ -1254,7 +1255,7 @@ SceneTreeDock::SceneTreeDock(EditorNode *p_editor,Node *p_scene_root,EditorSelec
 
 	tb = memnew( ToolButton );
 	tb->connect("pressed",this,"_tool_selected",make_binds(TOOL_INSTANCE, false));
-	tb->set_tooltip("Instance a Node from scene file.");
+	tb->set_tooltip("Instance a scene file as a Node.");
 	hbc_top->add_child(tb);
 	tool_buttons[TOOL_INSTANCE]=tb;
 
